@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.study.domain.BoardVO;
+import com.study.board.domain.BoardVO;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -67,6 +67,20 @@ public class BoardDAOImpl implements BoardDAO {
 		data.put("postNum", postNum);
 		
 		return sql.selectList(namespace + ".listPage", data);
+	}
+
+	// 게시글 목록 + 페이징 + 검색
+	@Override
+	public List<BoardVO> listPageSearch(int displayPost, int postNum, String searchType, String keyword) throws Exception {
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("displayPost", displayPost);
+		data.put("postNum", postNum);
+		
+		data.put("searchType", searchType);
+		data.put("keyword", keyword);		
+		
+		return sql.selectList(namespace + ".listPageSearch", data);
 	}
 
 }

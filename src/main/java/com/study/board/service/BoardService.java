@@ -2,7 +2,7 @@ package com.study.board.service;
 
 import java.util.List;
 
-import com.study.domain.BoardVO;
+import com.study.board.domain.BoardVO;
 
 public interface BoardService {
 
@@ -26,5 +26,8 @@ public interface BoardService {
 	
 	// 게시글 목록 + 페이징
 	List<BoardVO> listPage(int displayPost, int postNum) throws Exception;
+	
+	// 게시글 목록 + 페이징 + 검색
+	List<BoardVO> listPageSearch(int displayPost, int postNum, String searchType, String keyword) throws Exception;
 	
 }

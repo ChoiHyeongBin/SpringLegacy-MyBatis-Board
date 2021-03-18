@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.study.board.dao.BoardDAO;
-import com.study.domain.BoardVO;
+import com.study.board.domain.BoardVO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -60,6 +60,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardVO> listPage(int displayPost, int postNum) throws Exception {
 		return dao.listPage(displayPost, postNum);
+	}
+
+	// 게시글 목록 + 페이징 + 검색
+	@Override
+	public List<BoardVO> listPageSearch(int displayPost, int postNum, String searchType, String keyword) throws Exception {
+		return dao.listPageSearch(displayPost, postNum, searchType, keyword);
 	}
 
 }

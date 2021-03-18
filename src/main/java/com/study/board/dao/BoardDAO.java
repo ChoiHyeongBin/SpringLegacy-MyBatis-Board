@@ -2,7 +2,7 @@ package com.study.board.dao;
 
 import java.util.List;
 
-import com.study.domain.BoardVO;
+import com.study.board.domain.BoardVO;
 
 public interface BoardDAO {
 
@@ -26,5 +26,8 @@ public interface BoardDAO {
 	
 	// 게시글 목록 + 페이징
 	List<BoardVO> listPage(int displayPost, int postNum) throws Exception;
+	
+	// 게시글 목록 + 페이징 + 검색
+	List<BoardVO> listPageSearch(int displayPost, int postNum, String searchType, String keyword) throws Exception;
 	
 }

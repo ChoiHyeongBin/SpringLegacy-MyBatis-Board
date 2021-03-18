@@ -48,14 +48,14 @@
 <div>
 
 	<c:if test="${page.prev}">
-		<span>[ <a href="/board/listPage?num=${page.startPageNum - 1}">이전</a> ]</span>	
+		<span>[ <a href="/board/listPageSearch?num=${page.startPageNum - 1}">이전</a> ]</span>	
 	</c:if>
 	
 	<c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
 		<span>
 		
 			<c:if test="${select != num}">
-				<a href="/board/listPage?num=${num}">${num}</a>
+				<a href="/board/listPageSearch?num=${num}">${num}</a>
 			</c:if>
 			<c:if test="${select == num}">
 				<b>${num}</b>
@@ -65,7 +65,7 @@
 	</c:forEach>
 	
 	<c:if test="${page.next}">
-		<span>[ <a href="/board/listPage?num=${page.endPageNum + 1}">다음</a> ]</span>
+		<span>[ <a href="/board/listPageSearch?num=${page.endPageNum + 1}">다음</a> ]</span>
 	</c:if>
 
 	<!-- 
@@ -75,7 +75,37 @@
 		</span>	
 	</c:forEach>
 	-->
+	
+	<div>
+		<select name="searchType">
+			<option value="title">제목</option>
+			<option value="content">내용</option>
+			<option value="title_content">제목+내용</option>
+			<option value="writer">작성자</option>
+		</select>
+		
+		<input type="text" name="keyword" />
+		
+		<button type="button" id="searchBtn">검색</button>
+	</div>
+	
 </div>
+
+<script>
+
+document.getElementById("searchBtn").onclick = function() {		// id 가 searchBtn 인 html 엘리먼트에 클릭 이벤트가 발생하면, function() {} 내부의 코드가 실행
+	let searchType = document.getElementsByName("searchType")[0].value;		// getElementByName (X) -> getElementsByName (O) 주의 !!
+	let keyword = document.getElementsByName("keyword")[0].value;
+	
+	location.href = "/board/listPageSearch?num=1" + "&searchType=" + searchType + "&keyword=" + keyword;
+	
+	/*
+	console.log(searchType);
+	console.log(keyword);
+	*/
+}
+
+</script>
 
 </body>
 </html>

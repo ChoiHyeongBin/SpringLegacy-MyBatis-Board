@@ -29,7 +29,7 @@
 	</bean>
 	
 	<!-- 스프링이 패키지를 찾아서 사용할 수 있게됨 -->
-	<context:component-scan base-package="com.study.domain"></context:component-scan>
+	<context:component-scan base-package="com.study.board.domain"></context:component-scan>
 	<context:component-scan base-package="com.study.board.dao"></context:component-scan>
 	<context:component-scan base-package="com.study.board.service"></context:component-scan>
 		
