@@ -18,4 +18,13 @@ public interface BoardService {
 	// 게시글 수정
 	void modify(BoardVO vo) throws Exception;
 	
+	// 게시글 삭제
+	void delete(int bno) throws Exception;
+	
+	// 게시글 총 갯수
+	int count() throws Exception;
+	
+	// 게시글 목록 + 페이징
+	List<BoardVO> listPage(int displayPost, int postNum) throws Exception;
+	
 }

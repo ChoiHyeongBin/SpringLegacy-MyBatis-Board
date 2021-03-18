@@ -35,5 +35,25 @@
 				writer = #{writer}
 			WHERE bno = #{bno}
 	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE
+			FROM tbl_board
+		WHERE bno = #{bno}
+	</delete>
+	
+	<!-- 게시물 총 갯수 -->
+	<select id="count" resultType="int">
+		SELECT COUNT(bno) FROM tbl_board;
+	</select>
+	
+	<select id="listPage" parameterType="hashMap" resultType="com.study.domain.BoardVO">
+		SELECT 
+			bno, title, writer, regDate, viewCnt
+		FROM tbl_board
+		ORDER BY bno DESC
+		LIMIT #{displayPost}, #{postNum}
+	</select>
 
 </mapper>
