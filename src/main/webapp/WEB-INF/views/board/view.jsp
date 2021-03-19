@@ -63,25 +63,47 @@
 	<li>
 	    <div>
 	        <p>${reply.reply_writer} / <fmt:formatDate value="${reply.regDate}" pattern="yyyy-MM-dd" /></p>	<!-- reply_writer 로 안하면 어떻게 될까? -->
-	        <p>${reply.content}</p>
+	        <p>${reply.content}</p> <button onclick="location.href='/reply/delete?bno=${reply.bno}&rno=${reply.rno}'">삭제</button>
 	    </div>
 	</li>    
 	</c:forEach>
 </ul>
 
 <div>
-	<p>
-		<label>댓글 작성자</label> <input type="text">
-	</p>
-	<p>
-		<textarea rows="5" cols="50"></textarea>
-	</p>
-	<p>
-		<button type="button">댓글 작성</button>
-	</p>
+
+    <form method="post" action="/reply/write">
+    
+        <p>
+            <label>댓글 작성자</label> <input type="text" id="replyWriter" name="reply_writer">
+        </p>
+        <p>
+            <textarea rows="5" cols="50" name="content" id="replyContent"></textarea>
+        </p>
+        <p>
+        	<input type="hidden" name="bno" value="${view.bno}">
+            <button disabled="true" type="submit" id="submitBtn">댓글 작성</button>
+        </p>
+        
+    </form>
+    
 </div>
 
 <!-- 댓글 끝 -->
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type ="text/javascript">                 
+	$(function(){
+		$("#replyWriter").on('input', function(){		// 작성자는 필수로 입력
+			if ($("#replyWriter").val == '') {
+				console.log("1");
+				$("#submitBtn").attr("disabled", true);
+			} else {
+				console.log("2");
+				$("#submitBtn").attr("disabled", false);
+			}
+		});
+	});
+</script>
 
 </body>
 </html>

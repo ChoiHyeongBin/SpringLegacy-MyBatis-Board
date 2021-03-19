@@ -1,5 +1,6 @@
 package com.study.board.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
