@@ -45,7 +45,7 @@
 	
 	<!-- 게시글 총 갯수 -->
 	<select id="count" resultType="int">
-		SELECT COUNT(bno) FROM tbl_board;
+		SELECT COUNT(bno) FROM tbl_board
 	</select>
 	
 	<!-- 게시글 목록 + 페이징 -->
@@ -79,6 +79,25 @@
 		
 		ORDER BY bno DESC
 		LIMIT #{displayPost}, #{postNum}
+	</select>
+	
+	<!-- 게시글 총 갯수 + 검색 -->
+	<select id="searchCount" parameterType="hashMap" resultType="int">	<!-- searchType 과 keyword 를 받아야하므로 parameterType 를 추가 -->
+		SELECT COUNT(bno) FROM tbl_board
+		
+		<if test="searchType.equals('title')">
+			WHERE title LIKE CONCAT('%', #{keyword} ,'%')
+		</if>
+		<if test="searchType.equals('content')">
+			WHERE content LIKE CONCAT('%', #{keyword} ,'%')
+		</if>
+		<if test="searchType.equals('title_content')">
+			WHERE title LIKE CONCAT('%', #{keyword} ,'%')
+				OR content LIKE CONCAT('%', #{keyword} ,'%')
+		</if>
+		<if test="searchType.equals('writer')">
+			WHERE writer LIKE CONCAT('%', #{keyword} ,'%')
+		</if>
 	</select>
 
 </mapper>

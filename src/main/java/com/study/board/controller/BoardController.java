@@ -10,16 +10,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.study.board.service.BoardService;
 import com.study.board.domain.BoardVO;
 import com.study.board.domain.Page;
+import com.study.board.domain.ReplyVO;
+import com.study.board.service.BoardService;
+import com.study.board.service.ReplyService;
 
 @Controller
 @RequestMapping("/board/*")
 public class BoardController {
 	
 	@Inject	// @Aurowired와 동일하게 작동하지만 찾는 순서가 다르다 (주입하려고 하는 객체의 타입이 일치하는지를 찾고 객체를 자동으로 주입)
-	BoardService service;
+	private BoardService service;
+	
+	@Inject
+	private ReplyService replyService;
 	
 	// 게시글 목록
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -50,6 +55,11 @@ public class BoardController {
 	public void getView(@RequestParam("bno") int bno, Model model) throws Exception {	// @RequestParam([문자열]) -> 주소에 있는 특정한 값을 가져올 수 있음
 		BoardVO vo = service.view(bno);
 		model.addAttribute("view", vo);
+		
+		// 댓글 조회
+		List<ReplyVO> reply = null;
+		reply = replyService.list(bno);
+		model.addAttribute("reply", reply);
 	}
 	
 	// 게시글 수정
@@ -174,7 +184,13 @@ public class BoardController {
 		Page page = new Page();
 		
 		page.setNum(num);
-		page.setCount(service.count());
+		// page.setCount(service.count());
+		page.setCount(service.searchCount(searchType, keyword));
+		
+		// 검색 타입과 검색어
+		// page.setSearchTypeKeyword(searchType, keyword);
+		page.setSearchType(searchType);
+		page.setKeyword(keyword);
 		
 		List<BoardVO> list = null;
 		// list = service.listPage(page.getDisplayPost(), page.getPostNum());
@@ -183,6 +199,9 @@ public class BoardController {
 		model.addAttribute("list", list);
 		model.addAttribute("page", page);
 		model.addAttribute("select", num);
+		
+		// model.addAttribute("searchType", searchType);
+		// model.addAttribute("keyword", keyword);
 	}
 	
 }
